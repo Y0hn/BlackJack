@@ -1,0 +1,14 @@
+C:\Users\janik\source\repos\BlackJack\bin\Debug\net9.0\BlackJack.exe
+C:\Users\janik\source\repos\BlackJack\bin\Debug\net9.0\BlackJack.deps.json
+C:\Users\janik\source\repos\BlackJack\bin\Debug\net9.0\BlackJack.runtimeconfig.json
+C:\Users\janik\source\repos\BlackJack\bin\Debug\net9.0\BlackJack.dll
+C:\Users\janik\source\repos\BlackJack\bin\Debug\net9.0\BlackJack.pdb
+C:\Users\janik\source\repos\BlackJack\obj\Debug\net9.0\BlackJack.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\janik\source\repos\BlackJack\obj\Debug\net9.0\BlackJack.AssemblyInfoInputs.cache
+C:\Users\janik\source\repos\BlackJack\obj\Debug\net9.0\BlackJack.AssemblyInfo.cs
+C:\Users\janik\source\repos\BlackJack\obj\Debug\net9.0\BlackJack.csproj.CoreCompileInputs.cache
+C:\Users\janik\source\repos\BlackJack\obj\Debug\net9.0\BlackJack.dll
+C:\Users\janik\source\repos\BlackJack\obj\Debug\net9.0\refint\BlackJack.dll
+C:\Users\janik\source\repos\BlackJack\obj\Debug\net9.0\BlackJack.pdb
+C:\Users\janik\source\repos\BlackJack\obj\Debug\net9.0\BlackJack.genruntimeconfig.cache
+C:\Users\janik\source\repos\BlackJack\obj\Debug\net9.0\ref\BlackJack.dll
