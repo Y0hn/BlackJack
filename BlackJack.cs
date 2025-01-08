@@ -57,7 +57,6 @@ namespace Casino
     {
         protected List<Card> cards;
         public virtual bool CanPlay { get => 0 < cards.Count; }
-
         public Hand()
         {
             cards = new();
@@ -70,6 +69,13 @@ namespace Casino
         {
             CardRenderer.MultiCardGrafic(cards);
         }
+        public virtual void RevalNext()
+        {
+            Card? card = cards.Find(c => !c.Readable);
+            if (card != null)
+                card.Readable = true;
+        }
+
     }
     public class BlackHand : Hand
     {

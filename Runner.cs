@@ -13,6 +13,7 @@ namespace Program
             hand.Add(cardStack.PickCard());
             hand.Add(cardStack.PickCard());
             hand.Add(cardStack.PickCard());
+            hand.RevalNext();
 
             hand.WriteOut();
 
