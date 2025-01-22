@@ -167,8 +167,10 @@ namespace Casino
             {
                 wictor = hand2;
             }
-            Console.WriteLine($"H1: sum({hand1.Sum}) canPlay({hand1.CanPlay}) victor({hand1.Victory})");
-            Console.WriteLine($"H2: sum({hand2.Sum}) canPlay({hand2.CanPlay}) victor({hand2.Victory})");
+            
+            //Console.WriteLine($"H1: sum({hand1.Sum}) canPlay({hand1.CanPlay}) victor({hand1.Victory})");
+            //Console.WriteLine($"H2: sum({hand2.Sum}) canPlay({hand2.CanPlay}) victor({hand2.Victory})");
+            
             return wictor;
         }
     }

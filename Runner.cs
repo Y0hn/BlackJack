@@ -6,11 +6,7 @@ namespace Program
     {
         public static void Main()
         {
-            while (true)
-            {
-                BlackGame.WithDealer();
-                Console.ReadKey();
-            }            
+            BlackGame.Play();
         }
     }
 }

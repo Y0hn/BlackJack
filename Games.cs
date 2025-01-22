@@ -2,7 +2,27 @@ namespace Casino
 {
     public class BlackGame
     {
-        public static void WithDealer()
+        public static void Play(int times = -1)
+        {
+            Dictionary<string, byte> winnerBoard = new();
+            
+            while (times != 0)  // default is relatively infinit
+            {
+                string winner = WithDealer();
+
+                if (winnerBoard.ContainsKey(winner))
+                    winnerBoard[winner]++;
+                else
+                    winnerBoard.Add(winner, 1);
+                
+                foreach (KeyValuePair<string, byte> row in winnerBoard)
+                    Console.WriteLine($"{row.Key} won {row.Value} times");
+
+                Console.ReadKey();
+                times--;
+            }
+        }
+        private static string WithDealer()
         {
             Console.ForegroundColor = ConsoleColor.White;
             CardStack cardStack= new();
@@ -30,7 +50,7 @@ namespace Casino
                 player.WriteOut();
                 
                 if (loopCut) break;
-                if (!player.Folded)
+                if (!player.Folded && !dealer.Victory)
                 {
                     // HRAC
                     Console.Write("\n\nChces tahat [Y/n] :");
@@ -46,6 +66,7 @@ namespace Casino
                         player.RevalNext();
                     }
                 }
+                
                 Console.Clear();
                 dealer.WriteOut();                
                 Console.WriteLine();
@@ -67,7 +88,14 @@ namespace Casino
                 }
             }
             
-            Console.WriteLine($"{BlackHand.GetWinner(player, dealer)?.Name} won the game"); 
+            Console.Clear();
+            dealer.WriteOut();                
+            Console.WriteLine();
+            player.WriteOut();
+
+            string? r = BlackHand.GetWinner(player, dealer)?.Name;
+            r ??= "";
+            return r;
         }
     }
 }
