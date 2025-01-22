@@ -4,20 +4,13 @@ namespace Program
 {
     internal class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
-            CardStack cardStack= new();
-
-            Hand hand = new();
-            
-            hand.Add(cardStack.PickCard());
-            hand.Add(cardStack.PickCard());
-            hand.Add(cardStack.PickCard());
-            hand.RevalNext();
-
-            hand.WriteOut();
-
-            Console.ReadKey();
+            while (true)
+            {
+                BlackGame.WithDealer();
+                Console.ReadKey();
+            }            
         }
     }
 }

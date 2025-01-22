@@ -53,13 +53,23 @@ namespace Casino
             return package.Pop();
         }
     }
-    public class Hand
+    public abstract class Hand
     {
+        protected string name;
         protected List<Card> cards;
+        public virtual string Name => name;
         public virtual bool CanPlay { get => 0 < cards.Count; }
-        public Hand()
+        public virtual bool Folded  
+        { 
+            get => folded; 
+            set => folded = value; 
+        }
+        protected bool folded;
+        public Hand(string n = "")
         {
-            cards = new();
+            folded = false;
+            cards = [];
+            name = n;
         }
         public virtual void Add(Card card)
         {
@@ -69,52 +79,111 @@ namespace Casino
         {
             CardRenderer.MultiCardGrafic(cards);
         }
-        public virtual void RevalNext()
+        public virtual bool RevalNext()
         {
             Card? card = cards.Find(c => !c.Readable);
+            bool find = card != null;
+
             if (card != null)
                 card.Readable = true;
-        }
 
+            return find;
+        }
+        public override string ToString()
+        {
+            string s = "";
+            cards.ForEach(c => s += c.ToString());
+            return s;
+        }
     }
     public class BlackHand : Hand
     {
-        public override bool CanPlay    { get => GetSum() < MAX_SUM; }
-        public Action? Victory;
+        public override bool CanPlay    => Sum <= MAX_SUM;
+        public override bool Folded
+        {
+            get => base.Folded || Victory || !CanPlay;
+            set => base.Folded = value;
+        }
+        public bool Victory             => Sum == MAX_SUM;
         private const byte MAX_SUM = 21;
-        public BlackHand()
+        public virtual byte Sum
+        {
+            get {
+                byte    sum = 0,
+                        aces = 0;
+                foreach (Card card in cards.FindAll(c => c.Readable))
+                {
+                    if (card.AValue > (byte)Value.Ten)
+                        sum += 10;
+                    else if (card.AValue > 0)
+                        sum += (byte)(card.Value+1);
+                    else
+                        aces++;
+                }
+
+                for (int i = 0; i < aces; i++)
+                {
+                    if (i + 11 <= MAX_SUM)
+                        sum += 11;
+                    else
+                        sum += 1;
+                }
+
+                return sum;
+            }
+        }
+        public BlackHand(string n) : base(n)
         {
             
         }
-        public byte GetSum()
+        public override void WriteOut()
         {
-            byte    sum = 0,
-                    aces = 0;
-            foreach (Card card in cards)
-            {
-                if (card.AValue > 0)
-                    sum += (byte)card.Value;
-                else
-                    aces++;
-            }
+            base.WriteOut();
 
-            for (int i = 0; i < aces; i++)
-            {
-                if (i + 11 <= MAX_SUM)
-                    sum += 11;
-                else
-                    sum += 1;
-            }
-
-            return sum;
+            Console.WriteLine($"Sucet: {Sum}");
         }
         public override void Add(Card card)
         {
             base.Add(card);
-            if (GetSum() == MAX_SUM)
+        }
+        public static BlackHand? GetWinner(BlackHand hand1, BlackHand hand2)
+        {
+            BlackHand? wictor = null;
+            if     (hand1.Victory 
+                        || 
+                    hand1.CanPlay && 
+                        (!hand2.CanPlay
+                            || 
+                        hand2.Sum < hand1.Sum))
             {
-
+                wictor = hand1;
             }
+            else if (hand2.Victory
+                        ||
+                    hand2.CanPlay && 
+                        (!hand1.CanPlay
+                            || 
+                        hand1.Sum < hand2.Sum))
+            {
+                wictor = hand2;
+            }
+            Console.WriteLine($"H1: sum({hand1.Sum}) canPlay({hand1.CanPlay}) victor({hand1.Victory})");
+            Console.WriteLine($"H2: sum({hand2.Sum}) canPlay({hand2.CanPlay}) victor({hand2.Victory})");
+            return wictor;
+        }
+    }
+    public class BlackDealer : BlackHand
+    {
+        public override bool Folded 
+        { 
+            get => base.Folded || DealerLimit; 
+            set => base.Folded = value; 
+        }
+        protected virtual bool DealerLimit => Sum > DEALER_WHANTED_SUM;
+        const int DEALER_WHANTED_SUM = 16;
+        public BlackDealer(string n = "Dealer") : base(n)
+        {
+
         }
     }
     public class Card : IEquatable<Card>
